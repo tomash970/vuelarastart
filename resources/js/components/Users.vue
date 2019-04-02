@@ -22,7 +22,6 @@
                     <th>Email</th>
                     <th>Type</th>
                     <th>Biography</th>
-                    <th>Status</th>
                     <th>Modify</th>
                     <th>Created at</th>
                   </tr>
@@ -33,8 +32,7 @@
                     <td>{{user.email}}</td>
                     <td>{{user.type | upText}}</td>
                     <td>{{user.bio}}</td>
-                    <td>{{user.created_at}}</td>
-                    <td><span class="tag tag-success">Approved</span></td>
+                    <td>{{user.created_at | myDate}}</td>
                     <td>
                         <a href="">
                             <i class="fa fa-edit text-blue"></i>
