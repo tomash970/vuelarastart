@@ -89,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Management
                 <i class="right fas fa-angle-left text-yellow"></i>
               </p>
-            </ra>
+            </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/users" class="nav-link">
@@ -100,7 +100,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </ul>
           </li>
-            <li class="nav-item">
+          <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user-alt text-green"></i>
               <p>

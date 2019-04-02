@@ -17,15 +17,23 @@
                   <tbody>
                   <tr>
                     <th>ID</th>
+                    <th>Photo</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Type</th>
+                    <th>Biography</th>
+                    <th>Status</th>
                     <th>Modify</th>
+                    <th>Created at</th>
                   </tr>
-                  <tr>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>11-7-2014</td>
+                  <tr v-for="user in users" :key="user.id">
+                    <td>{{user.id}}</td>
+                    <td>{{user.photo}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.type | upText}}</td>
+                    <td>{{user.bio}}</td>
+                    <td>{{user.created_at}}</td>
                     <td><span class="tag tag-success">Approved</span></td>
                     <td>
                         <a href="">
@@ -112,6 +120,7 @@
     export default {
         data() {
             return {
+                users:{},
                 form: new Form({
                     name: '',
                     email: '',
@@ -123,13 +132,16 @@
             }
         },
         methods: {
+            loadUsers() {
+                axios.get("api/user").then(({data}) => (this.users = data.data));
+            },
             submitUser() {
                 this.form.post('api/user');
                   
             }
         },
-        mounted() {
-            console.log('Component mounted.')
+        created() {
+           this.loadUsers();
         }
     }
 </script>
