@@ -22,8 +22,8 @@
                     <th>Email</th>
                     <th>Type</th>
                     <th>Biography</th>
-                    <th>Modify</th>
                     <th>Created at</th>
+                    <th>Modify</th>
                   </tr>
                   <tr v-for="user in users" :key="user.id">
                     <td>{{user.id}}</td>
@@ -38,7 +38,7 @@
                             <i class="fa fa-edit text-blue"></i>
                         </a>
                         /
-                        <a href="">
+                        <a @click="deleteUser(user.id)">
                             <i class="fa fa-trash text-red"></i>
                         </a>
                     </td>
@@ -130,17 +130,62 @@
             }
         },
         methods: {
+            deleteUser(id){
+                swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    //Send rqusert to server
+                    //vform
+                    if (result.value) {
+                        this.form.delete('api/user/'+id).then(() => {
+                            
+                                toast.fire(
+                                  'Deleted!',
+                                  'Your file has been deleted.',
+                                  'success'
+                                );
+                                Fire.$emit('AfterCreate');
+                              
+                          }).catch(() => {
+                            swal("Failed!", "There is something wrong.", "warning");
+                          });
+                    }
+                })
+            },
             loadUsers() {
                 axios.get("api/user").then(({data}) => (this.users = data.data));
             },
             submitUser() {
                 this.$Progress.start();
-                this.form.post('api/user');
-                this.$Progress.finish()  
+                this.form.post('api/user')
+                .then(() => {
+                    Fire.$emit('AfterCreate');
+                $('#addNew').modal('hide');
+
+                toast.fire({
+                  type: 'success',
+                  title: 'User added successfuly!!!'
+                });
+                this.$Progress.finish(); 
+                })
+                .catch(() => {
+
+                });
+                 
             }
         },
         created() {
            this.loadUsers();
+           //setInterval(() => this.loadUsers(), 3000);
+           Fire.$on('AfterCreate', () => {
+            this.loadUsers();
+           });
         }
     }
 </script>

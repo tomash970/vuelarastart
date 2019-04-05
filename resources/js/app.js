@@ -16,6 +16,30 @@ window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 
+/**
+ * fire
+ */
+
+
+window.Fire = new Vue();
+
+/**
+ * Sweet alert
+ */
+
+import swal from 'sweetalert2';
+window.swal = swal;
+
+const toast = swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+window.toast = toast;
+
+
 
 /**
  * Router setup
