@@ -8,7 +8,7 @@
                 <h3 class="card-title">Users Table</h3>
 
                 <div class="card-tools">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNew">Add New <i class="fas fa-user-plus fa-fw"></i></button>
+                    <button type="button" class="btn btn-primary" @click="newModal">Add New <i class="fas fa-user-plus fa-fw"></i></button>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -34,7 +34,7 @@
                     <td>{{user.bio}}</td>
                     <td>{{user.created_at | myDate}}</td>
                     <td>
-                        <a href="">
+                        <a @click="editModal(user)">
                             <i class="fa fa-edit text-blue"></i>
                         </a>
                         /
@@ -59,12 +59,12 @@
           <div class="modal-dialog modal-dialog-cetered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="addNewLabel">Add New</h5>
+                <h5 class="modal-title" id="addNewLabel">{{editmode ? 'Update User' : 'Add New'}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form @submit.prevent="submitUser">
+              <form @submit.prevent="editmode ? updateUser() : submitUser()">
                   <div class="modal-body">
                         <div class="form-group">
                           <input v-model="form.name" type="text" name="name" placeholder="Name" 
@@ -103,7 +103,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create New User</button>
+                    <button type="submit" class="btn btn-primary">{{editmode ? 'Update User' : 'Create New User'}}</button>
                   </div>
               </form>
             </div>
@@ -117,9 +117,12 @@
 <script>
     export default {
         data() {
+
             return {
+                editmode: false,
                 users:{},
                 form: new Form({
+                    id:'',
                     name: '',
                     email: '',
                     password: '',
@@ -130,6 +133,35 @@
             }
         },
         methods: {
+            updateUser(){
+                this.$Progress.start();
+                //console.log('editingdata')
+                this.form.put('api/user/' + this.form.id)
+                .then(() => {
+                    $('#addNew').modal('hide');
+                    Fire.$emit('AfterCreate');
+                    toast.fire(
+                                  'Data updated!',
+                                  'Your file has been updated.',
+                                  'success'
+                                );
+                    this.$Progress.finish();
+                })
+                .catch(() =>{
+                    this.$Progress.fail();
+                });
+            },
+            newModal(){
+                this.editmode = false;
+                this.form.reset();
+                $('#addNew').modal('show');
+            },
+            editModal(user){
+                this.editmode = true;
+                this.form.reset();
+                $('#addNew').modal('show');
+                this.form.fill(user);
+            },
             deleteUser(id){
                 swal.fire({
                   title: 'Are you sure?',
