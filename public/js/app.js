@@ -2021,11 +2021,14 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   },
   methods: {
+    updateInfo: function updateInfo() {
+      this.form.put('api/profile').then(function () {}).catch(function () {});
+    },
     updateProfile: function updateProfile(e) {
       var _this = this;
 
-      var file = e.target.files[0];
-      console.log(this.file);
+      var file = e.target.files[0]; //console.log(this.file);
+
       var reader = new FileReader(); // reader.onloadend = function(){
       //     console.log('RESULT', reader.result);
       // }
@@ -60473,7 +60476,24 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(3),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.updateInfo($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Update")]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -60619,20 +60639,6 @@ var staticRenderFns = [
             placeholder: "Passport(leave empty if not changing)"
           }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-danger", attrs: { type: "submit" } },
-          [_vm._v("Update")]
-        )
       ])
     ])
   }

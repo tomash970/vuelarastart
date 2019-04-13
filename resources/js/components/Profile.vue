@@ -109,7 +109,7 @@
 
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button type="submit" class="btn btn-danger">Update</button>
+                              <button @click.prevent="updateInfo" type="submit" class="btn btn-info">Update</button>
                             </div>
                           </div>
                         </form>
@@ -145,6 +145,15 @@
             console.log('Component mounted.')
         },
         methods:{
+            updateInfo() {
+                this.form.put('api/profile')
+                .then(() => {
+
+                })
+                .catch(() => {
+
+                })
+            },
             updateProfile(e) {
                 let file = e.target.files[0];
                 //console.log(this.file);
@@ -159,7 +168,8 @@
             }
         },
         created(){
-            axios.get("api/profile").then(({data}) => (this.form.fill(data)))
+            axios.get("api/profile")
+            .then(({data}) => (this.form.fill(data)))
         }
     }
 </script>
