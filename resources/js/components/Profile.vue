@@ -95,7 +95,7 @@
                             <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
                             <div class="col-sm-10">
-                              <input type="file" class="form-control-file"  placeholder="Skills">
+                              <input type="file" @change="updateProfile" class="form-control-file"  placeholder="Skills">
                             </div>
                           </div>
 
@@ -143,6 +143,20 @@
         }, 
         mounted() {
             console.log('Component mounted.')
+        },
+        methods:{
+            updateProfile(e) {
+                let file = e.target.files[0];
+                //console.log(this.file);
+                let reader = new FileReader();
+                // reader.onloadend = function(){
+                //     console.log('RESULT', reader.result);
+                // }
+                reader.onloadend = (file) => {
+                    this.form.photo = reader.result;
+                }
+                reader.readAsDataURL(file);
+            }
         },
         created(){
             axios.get("api/profile").then(({data}) => (this.form.fill(data)))
