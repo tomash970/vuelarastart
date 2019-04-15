@@ -103,7 +103,7 @@
                             <label for="inputName" class="col-sm-10 control-label">Passport(leave empty if not changing)</label>
 
                             <div class="col-sm-10">
-                              <input type="password" class="form-control" id="inputName" placeholder="Passport(leave empty if not changing)">
+                              <input type="password" class="form-control" v-model="form.password" id="inputName" placeholder="Passport(leave empty if not changing)">
                             </div>
                           </div>
 

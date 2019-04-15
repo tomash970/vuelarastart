@@ -83,13 +83,23 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user =  auth('api')->user();
-        if($request->photo) {
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|max:191|unique:users,email,'.$user->id,
+            'password' => 'sometimes|rquired|string|max:191|min:6',
+        ]);
+
+        $currentPhoto = $user->photo;
+        if($request->photo != $currentPhoto) {
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
+            //donji kod dodaje novo ime 
+            $request->merge(['photo' => $name]);
         }
 
-
-        //return ['message' => "Success!!!"];
+        $user->update($request->all());
+        return ['message' => "Success!!!"];
     }
 
     /**
@@ -106,7 +116,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:191',
             'email' => 'required|string|max:191|unique:users,email,'.$user->id,
-            'password' => 'sometimes|string|max:191|min:6',
+            'password' => 'sometimes|required|string|max:191|min:6',
         ]);
         $user->update($request->all());
         return ['message' => 'update use info'];
