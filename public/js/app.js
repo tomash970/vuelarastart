@@ -2027,17 +2027,25 @@ __webpack_require__.r(__webpack_exports__);
     updateProfile: function updateProfile(e) {
       var _this = this;
 
-      var file = e.target.files[0]; //console.log(this.file);
-
+      var file = e.target.files[0];
+      console.log(file);
       var reader = new FileReader(); // reader.onloadend = function(){
       //     console.log('RESULT', reader.result);
       // }
 
-      reader.onloadend = function (file) {
-        _this.form.photo = reader.result;
-      };
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          _this.form.photo = reader.result;
+        };
 
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire({
+          type: 'error',
+          title: 'Ooops...',
+          text: 'You are trying to upload to large file'
+        });
+      }
     }
   },
   created: function created() {

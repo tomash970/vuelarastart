@@ -146,25 +146,38 @@
         },
         methods:{
             updateInfo() {
+                this.$Progress.start();
+
                 this.form.put('api/profile')
                 .then(() => {
 
+                    this.$Progress.finish();
                 })
                 .catch(() => {
-
+                    this.$Progress.fail();
                 })
             },
             updateProfile(e) {
                 let file = e.target.files[0];
-                //console.log(this.file);
+                console.log(file);
                 let reader = new FileReader();
                 // reader.onloadend = function(){
                 //     console.log('RESULT', reader.result);
                 // }
-                reader.onloadend = (file) => {
-                    this.form.photo = reader.result;
+
+                if(file['size'] < 2111775) {
+                    reader.onloadend = (file) => {
+                        this.form.photo = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                }else{
+                    swal.fire({
+                        type: 'error',
+                        title:'Ooops...',
+                        text: 'You are trying to upload to large file',
+                    });
                 }
-                reader.readAsDataURL(file);
+                
             }
         },
         created(){
