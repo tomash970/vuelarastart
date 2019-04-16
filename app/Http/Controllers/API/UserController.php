@@ -96,6 +96,11 @@ class UserController extends Controller
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
             //donji kod dodaje novo ime 
             $request->merge(['photo' => $name]);
+
+            $userPhoto = public_path('img/profile/').$currentPhoto;
+            if (file_exists($userPhoto)) {
+                @unlink($userPhoto);
+            }
         }
 
         if(!empty($request->password)) {
