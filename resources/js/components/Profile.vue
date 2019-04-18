@@ -150,7 +150,9 @@
         },
         methods:{
             getProfilePhoto() {
-                return "img/profile/" + this.form.photo;
+                let photo = (this.form.photo.length >100) ? this.form.photo : "img/profile/" + this.form.photo;
+                return photo;
+                //return "img/profile/" + this.form.photo;
             },
             updateInfo() {
                 this.$Progress.start();

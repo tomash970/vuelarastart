@@ -2026,7 +2026,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getProfilePhoto: function getProfilePhoto() {
-      return "img/profile/" + this.form.photo;
+      var photo = this.form.photo.length > 100 ? this.form.photo : "img/profile/" + this.form.photo;
+      return photo; //return "img/profile/" + this.form.photo;
     },
     updateInfo: function updateInfo() {
       var _this = this;
