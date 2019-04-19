@@ -11,6 +11,12 @@ window.Vue = require('vue');
 
 import moment from 'moment';
 
+//impotranje vlastite klase
+import Gate from './Gate';
+//prototyping vlastite klase
+Vue.prototype.$gate = new Gate(window.user);
+
+
 import { Form, HasError, AlertError } from 'vform';
 window.Form = Form;
 Vue.component(HasError.name, HasError);
