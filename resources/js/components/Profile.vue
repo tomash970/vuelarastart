@@ -159,7 +159,7 @@
 
                 this.form.put('api/profile')
                 .then(() => {
-
+                    Fire.$emit('AfterCreate');
                     this.$Progress.finish();
                 })
                 .catch(() => {
