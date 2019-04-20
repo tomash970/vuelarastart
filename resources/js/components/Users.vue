@@ -50,6 +50,7 @@
               <!-- /.card-body -->
               <div class="card-footer">
                   <pagination :data="users" @pagination-change-page="getResults"></pagination>
+                  
               </div>
               <!-- /.card-footer -->
             </div>
