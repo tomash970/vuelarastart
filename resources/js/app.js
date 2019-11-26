@@ -41,6 +41,7 @@ window.swal = swal;
 const toast = swal.mixin({
   toast: true,
   position: 'top-end',
+  
   showConfirmButton: false,
   timer: 3000
 });
@@ -151,8 +152,9 @@ const app = new Vue({
     	search: ''
     },
     methods: {
-    	searchit(){
+    	//dembounce is lodash function
+    	searchit: _.debounce(() => {
     		Fire.$emit('searching');
-    	}
+    	}, 1400)
     }
 });

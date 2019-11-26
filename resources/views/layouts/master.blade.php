@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- SEARCH FORM -->
     <div class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" v-model="search" type="search" placeholder="Search" aria-label="Search" @keyup.enter="searchit">
+        <input class="form-control form-control-navbar" v-model="search" type="search" placeholder="Search" aria-label="Search" @keyup="searchit">
         <div class="input-group-append">
           <button @click="searchit" class="btn btn-navbar" type="submit">
             <i class="fa fa-search"></i>

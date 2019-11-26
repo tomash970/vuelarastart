@@ -93,7 +93,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:191',
             'email' => 'required|string|max:191|unique:users,email,'.$user->id,
-            'password' => 'sometimes|rquired|string|max:191|min:6',
+            'password' => 'sometimes|required|string|max:191|min:6',
         ]);
 
         $currentPhoto = $user->photo;
@@ -158,7 +158,9 @@ class UserController extends Controller
               $query->where('name', 'LIKE', "%$search%")
               ->orWhere('email', 'LIKE', "%$search%")
               ->orWhere('type', 'LIKE', "%$search%");
-            })->paginate(10);
+            })->paginate(5);
+        }else{
+            return User::latest()->paginate(5);
         }
         return $users;
     }

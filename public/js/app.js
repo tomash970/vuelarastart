@@ -79162,9 +79162,10 @@ var app = new Vue({
     search: ''
   },
   methods: {
-    searchit: function searchit() {
+    //dembounce is lodash function
+    searchit: _.debounce(function () {
       Fire.$emit('searching');
-    }
+    }, 1400)
   }
 });
 
